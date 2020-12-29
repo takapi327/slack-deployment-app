@@ -1,6 +1,6 @@
-import * as cdk    from '@aws-cdk/core';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as apigw  from '@aws-cdk/aws-apigateway';
+import * as cdk        from '@aws-cdk/core';
+import * as lambda     from '@aws-cdk/aws-lambda';
+import * as apigateway from '@aws-cdk/aws-apigateway';
 
 export class SlackDeploymentAppStack extends cdk.Stack {
 
@@ -21,12 +21,18 @@ export class SlackDeploymentAppStack extends cdk.Stack {
       code: lambda.Code.fromAsset('lambda'),
 
       /** Specify the Lambda function to be executed */
-      handler: 'slack-deployment.handler'
+      handler: 'slack-deployment.handler',
+
+      /** Setting environment variables for Lambda */
+      environment: {
+        SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET!,
+        SLACK_BOT_TOKEN:      process.env.SLACK_BOT_TOKEN!
+      }
 
     });
 
     /** Connect Lambda to the API Gateway */
-    new apigw.LambdaRestApi(this, 'Endpoint', {
+    new apigateway.LambdaRestApi(this, 'Endpoint', {
       handler: SlackDeployment
     });
   }

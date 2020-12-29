@@ -1,15 +1,24 @@
 import * as awsServerlessExpress           from 'aws-serverless-express';
 import * as awsServerlessExpressMiddleware from 'aws-serverless-express/middleware';
-import * as express                        from 'express';
+import { App, ExpressReceiver }            from '@slack/bolt';
 
-const app = express();
-app.use(awsServerlessExpressMiddleware.eventContext());
-
-app.get('/', (req, res) => {
-  res.status(200).send('hello');
+const receiver = new ExpressReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET!
 });
 
-const server = awsServerlessExpress.createServer(app);
+const app = new App({
+  token:                 process.env.SLACK_BOT_TOKEN,
+  receiver:              receiver,
+  processBeforeResponse: true
+});
+
+app.message('hello', async({ message, say }: {message: any, say: any}) => {
+  await say(`hello ${message.user}`);
+});
+
+receiver.app.use(awsServerlessExpressMiddleware.eventContext());
+
+const server = awsServerlessExpress.createServer(receiver.app);
 
 exports.handler = (event: any, context: any) => {
   return awsServerlessExpress.proxy(server, event, context);

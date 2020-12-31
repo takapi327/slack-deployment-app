@@ -18,7 +18,7 @@ export class SlackDeploymentAppStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
 
       /** Specify the directory of the Code to be executed */
-      code: lambda.Code.fromAsset('lambda'),
+      code: lambda.Code.fromAsset('Lambda'),
 
       /** Specify the Lambda function to be executed */
       handler: 'slack-deployment.handler',
@@ -26,13 +26,13 @@ export class SlackDeploymentAppStack extends cdk.Stack {
       /** Setting environment variables for Lambda */
       environment: {
         SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET!,
-        SLACK_BOT_TOKEN:      process.env.SLACK_BOT_TOKEN!
+        SLACK_API_TOKEN:      process.env.SLACK_API_TOKEN!
       }
 
     });
 
     /** Connect Lambda to the API Gateway */
-    new apigateway.LambdaRestApi(this, 'Endpoint', {
+    new apigateway.LambdaRestApi(this, 'API-Slack-Updates-Endpoint', {
       handler: SlackDeployment
     });
   }

@@ -26,7 +26,7 @@ export class SlackDeploymentAppStack extends cdk.Stack {
       /** Setting environment variables for Lambda */
       environment: {
         SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET!,
-        SLACK_BOT_TOKEN:      process.env.SLACK_BOT_TOKEN!
+        SLACK_BOT_TOKEN:      process.env.SLACK_API_TOKEN!
       }
 
     });

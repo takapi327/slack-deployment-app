@@ -18,7 +18,7 @@ export class SlackDeploymentAppStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
 
       /** Specify the directory of the Code to be executed */
-      code: lambda.Code.fromAsset('Lambda'),
+      code: lambda.Code.fromAsset('lambda'),
 
       /** Specify the Lambda function to be executed */
       handler: 'slack-deployment.handler',

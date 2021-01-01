@@ -26,11 +26,11 @@ exports.handler = (event: any, context: any) => {
 };
 */
 
-import { WebClient } from '@slack/web-api';
-//import * as cdk from '@aws-cdk/core';
-//import { SlackDeploymentEcs } from '../ecs/SlackDeploymentEcs';
+import { WebClient }          from '@slack/web-api';
+import * as cdk               from '@aws-cdk/core';
+import { SlackDeploymentEcs } from '../ecs/SlackDeploymentEcs';
 
-//const app = new cdk.App();
+const app = new cdk.App();
 const web = new WebClient(process.env.SLACK_API_TOKEN);
 
 exports.handler = async(event: any) => {
@@ -44,7 +44,7 @@ exports.handler = async(event: any) => {
 
     deployMessage = 'イメージがアップされました'
 
-    //new SlackDeploymentEcs(app, 'SlackDeploymentEcs')
+    new SlackDeploymentEcs(app, 'SlackDeploymentEcs')
 
   } else {
     deployMessage = 'キャンセルされました'

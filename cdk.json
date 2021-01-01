@@ -1,6 +1,6 @@
 {
   "app": "npx ts-node --prefer-ts-exts bin/slack-deployment-app.ts",
-  "toolkitStackName": "bucket",
+  "toolkitStackName": "slack-deployment",
   "context": {
     "@aws-cdk/core:enableStackNameDuplicates": "true",
     "aws-cdk:enableDiffNoFail": "true",
